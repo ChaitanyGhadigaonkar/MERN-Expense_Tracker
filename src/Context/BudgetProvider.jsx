@@ -5,14 +5,15 @@ const Host ="http://localhost:3001";
 
 const BudgetProvider =(props)=>{
     const [budgets,setBudgets] = useState([]);
-
+    const [expenses,setExpenses] =useState([]);
 
     // getting the users all budgets 
     async function getAllBudgets(){
         const response =await fetch(`${Host}/api/budget/`,{
             method:"GET",
             headers:{
-                "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYzc5NTgzNGJiNGRjZTc5MDgxMjUzOSIsImlhdCI6MTY3NDAyNDMzOH0.ByQv3cGBdrfcxkfKOTyBci53JFku__cHNvNVy8m6aH4"
+                'Content-Type': 'application/json',
+                "authToken": localStorage.getItem("authToken")
             }
         })
         const result = await response.json();
@@ -21,12 +22,59 @@ const BudgetProvider =(props)=>{
         console.log(budget)
     };
 
+    // creating a budgets
+    async function createBudget(name,MaxSpending){
+        const response =await fetch(`${Host}/api/budget/`,{
+            method:"POST",
+            headers:{
+                'Content-Type': 'application/json',
+                "authToken":  localStorage.getItem("authToken")
+            },
+            body:JSON.stringify({name,MaxSpending})
+        })
+        const result = await response.json();
+        const {success , budget} = result;
+        setBudgets(prevBudgets=>[...prevBudgets,budget]);
+    };
+
+    // delete a note
+    async function deleteBudget(id){
+        const response =await fetch(`${Host}/api/budget/${id}`,{
+            method:"DELETE",
+            headers:{
+                'Content-Type': 'application/json',
+                "authToken":  localStorage.getItem("authToken")
+            },
+        })
+        const result = await response.json();
+        const {success , budget} = result;
+        const newArray = budgets.filter((id)=>{
+            return id !==budgets._id
+        })
+        setBudgets(newArray);
+    };
+
+    // updating a note
+    async function updateBudget(id,name,MaxSpending){
+        const response =await fetch(`${Host}/api/budget/${id}`,{
+            method:"PUT",
+            headers:{
+                'Content-Type': 'application/json',
+                "authToken":  localStorage.getItem("authToken")
+            },
+            body:JSON.stringify({name,MaxSpending})
+        })
+        const result = await response.json();
+        const {success , budget} = result;
+        setBudgets(budgets.map(el => (el._id === id ? Object.assign({},el,budget): el)));
+        
+    };
 
     useEffect(() => {
         getAllBudgets();
     }, []);
     return(
-        <BudgetContext.Provider value={{budgets,setBudgets,getAllBudgets}}>
+        <BudgetContext.Provider value={{budgets,setBudgets,getAllBudgets,createBudget,deleteBudget   ,updateBudget}}>
             {props.children}
         </BudgetContext.Provider>
     )

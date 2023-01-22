@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Budget from './Components/Budget/Budget';
@@ -15,8 +14,8 @@ function App() {
         <Navbar />
         <BudgetProvider>
           <Routes>
-            <Route  index path="" element={<Home/>}/>
-            <Route path="/signup" element={<Signup />} />
+            {/* <Route  path="" element={<Home/>}/> */}
+            <Route index  path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/budgets" element={<BudgetContainer />} />
           </Routes>

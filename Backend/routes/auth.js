@@ -20,12 +20,17 @@ UserRoute.post("/signup", async (req, res) => {
       // creating salt
       const salt = await bcrypt.genSalt(10);
       const secPassword = await bcrypt.hash(password, salt);
-      const user = new User({ name, email, password: secPassword });
-      const result = await user.save();
-      res.status(203).json({ success: true, result });
+      const doesUserExit = await User.exists({ email });
+      if(doesUserExit){
+        res.status(404).json({ success: false, err: "user exists" });
+      }else{
+        const user = new User({ name, email, password: secPassword });
+        const result = await user.save();
+        res.status(203).json({ success: true, result });
+      }
     }
   } catch (err) {
-    res.status(404).json({ success: false, err: err.message });
+    
   }
 });
 
