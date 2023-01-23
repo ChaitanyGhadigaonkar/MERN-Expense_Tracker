@@ -70,11 +70,8 @@ const BudgetProvider =(props)=>{
         
     };
 
-    useEffect(() => {
-        getAllBudgets();
-    }, []);
     return(
-        <BudgetContext.Provider value={{budgets,setBudgets,getAllBudgets,createBudget,deleteBudget   ,updateBudget}}>
+        <BudgetContext.Provider value={{budgets,setBudgets,getAllBudgets,createBudget,deleteBudget,updateBudget}}>
             {props.children}
         </BudgetContext.Provider>
     )

@@ -11,6 +11,7 @@ function Login() {
   
   async function handleLogin(e) {
     e.preventDefault();
+    console.log(credentials);
     const response =await fetch(`${Host}/api/auth/`, {
       method:"POST",
       headers:{
@@ -19,9 +20,9 @@ function Login() {
       body:JSON.stringify({email:credentials.email[0],password:credentials.password[0]})
     });
     const result = await response.json();
-
     if(result.success === true){
-      Navigator("/login");
+      localStorage.setItem("authToken",result.jwtToken);
+      Navigator("/budgets");
     }else{
       Navigator("/login");
     }
@@ -29,7 +30,7 @@ function Login() {
   function handleOnChange(e) {
     setCredentals({ ...credentials, [e.target.name]: [e.target.value] })
   }
-
+  
   useEffect(()=>{
     if(localStorage.getItem("authToken")){
       Navigator("/budgets");

@@ -6,6 +6,7 @@ import BudgetProvider from './Context/BudgetProvider';
 import Signup from './Components/Auth/Signup';
 import Login from './Components/Auth/Login';
 import Home from './Components/Home';
+import AddBudgetModel from './Components/AddBudgetModel';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/budgets" element={<BudgetContainer />} />
           </Routes>
+          <AddBudgetModel/>
         </BudgetProvider>
       </BrowserRouter>
     </>

@@ -39,7 +39,7 @@ function Signup() {
 
   return (
     <div className='w-screen h-[calc(100vh-4rem)] flex flex-col items-center justify-center gap-3 '>
-      <h1 className='font-semifold text-lg'>Resgister to <strong>Expense Tracker</strong></h1>
+      <h1 className='font-semifold text-lg'>Register to <strong>Expense Tracker</strong></h1>
       <form className="form w-9/12 flex flex-col gap-4 justify-around items-center sm:px-8 sm:w-full">
         <div className="name w-full flex flex-col gap-4 lg:flex-row ">
           <input type="text" name="name"
